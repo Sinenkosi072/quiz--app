@@ -53,8 +53,18 @@ $('.answers-container').empty();
 
 question.options.forEach((option,index) =>{
 const answerElement  = $(`<div class="answer-option">${String.fromCharCode(65 + index)}.${option}</div>`)
+ 
+answerElement.click(function(){
+    const question = quizData[currentQuestion];
+    const isCorrect = index === question.correct;
 
-$(`.answer-container`).append(answerElement);
+    if(isCorrect){
+       score++;
+       $(".feedback").text(question.explanation);
+    }
+});
+
+$(`.answers-container`).append(answerElement);
 });
 
 
