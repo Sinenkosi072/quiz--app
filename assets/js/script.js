@@ -40,34 +40,57 @@ const quizData = [
 let currentQuestion = 0;
 let score = 0;
 let userAnswers = [];
+loadQuestion();
 
-let question = quizData[currentQuestion];
+$('#nextBtn').click(function() {
+  nextQuestion();
+}); 
 
-$('.question-number').text(`Question ${currentQuestion +1}of ${quizData.length}`);
+  function loadQuestion() {
+    let question = quizData[currentQuestion];
+    $(".question-number").text(`Question ${currentQuestion + 1} of ${quizData.length}`);
+    $(".question-text").text(question.question);
+    $(".answers-container").empty();
 
-$('.question-text').text(question.question);
+    question.options.forEach((option, index) => {
+      const answerElement = $(`<div class="answer-option">${String.fromCharCode(65 + index)}. ${option}</div>`);
+      $(".answers-container").append(answerElement);
 
-$('.answers-container').empty();
+      answerElement.click(function () {
+        selectAnswer(index);
+      });
+    });
+  }
 
-
-
-question.options.forEach((option,index) =>{
-const answerElement  = $(`<div class="answer-option">${String.fromCharCode(65 + index)}.${option}</div>`)
- 
-answerElement.click(function(){
+  function selectAnswer(index) {
     const question = quizData[currentQuestion];
     const isCorrect = index === question.correct;
 
-    if(isCorrect){
-       score++;
-       $(".feedback").text(question.explanation);
+    if (isCorrect) {
+      score++;
     }
+
+    let feedbackText = '';
+    if(isCorrect){
+      feedbackText = 'Correct! ' + question.explanation;
+    }else{
+      feedbackText = 'Incorrect! ' + question.explanation;
+    }
+     $(".feedback").text(feedbackText);
+  }
+
+  function nextQuestion(){
+    currentQuestion++;
+    if(currentQuestion < quizData.length){
+  loadQuestion();
+    }
+  
+  }
 });
 
-$(`.answers-container`).append(answerElement);
-});
 
 
-});
+
+
 
 
