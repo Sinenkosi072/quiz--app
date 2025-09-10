@@ -1,3 +1,22 @@
 .answer-pointer .answer-option{
     cursor: pointer;
 }
+
+.results-container{
+    display:none;
+}
+
+.results-container.show{
+    display: block;
+}
+
+.progress-bar{
+    background-color: grey ;
+    height: 4px;
+}
+
+.progress-fill{
+    background-color: blue;
+    width: 20;
+    height: 4px;
+}

@@ -48,6 +48,13 @@ $('#nextBtn').click(function() {
 
   function loadQuestion() {
     let question = quizData[currentQuestion];
+
+    //progress bar
+    const progress = (currentQuestion/quizData.length) *100
+
+    $('.progress-fill').css("width",""+progress+"%");
+
+
     $(".question-number").text(`Question ${currentQuestion + 1} of ${quizData.length}`);
     $(".question-text").text(question.question);
     $(".answers-container").empty();
@@ -63,8 +70,16 @@ $('#nextBtn').click(function() {
   }
 
   function selectAnswer(index) {
+if($('.answer-option').hasClass('disabled')){
+  return;
+}
+    //disable the options
+    $('.answer-option').addClass('disabled');
+
     const question = quizData[currentQuestion];
     const isCorrect = index === question.correct;
+
+    userAnswers[currentQuestion] = index;
 
     if (isCorrect) {
       score++;
@@ -82,15 +97,58 @@ $('#nextBtn').click(function() {
   function nextQuestion(){
     currentQuestion++;
     if(currentQuestion < quizData.length){
+      $('.feedback').text("");
   loadQuestion();
+    }else{
+   showResults();
     }
   
   }
+  function showResults(){
+    $('.progress-fill').css("width","100%");
+    const percentage = (score/quizData.length )* 100;
+    let message = "";
+   if(percentage >= 80){
+message = `You scored ${percentage}%! Excellent work!`;
+   }else if(percentage >= 60){
+message =`Yoy scored ${percentage}%! Good job!`;
+   }else if(percentage >= 40){
+    message = `You scored ${percentage}%! You Tried`;
+   }else{
+    message = `You scored ${percentage}%! Unfortunately you failed`;
+   }
+
+$('.score-display').text(`${score}/${quizData.length}`);
+
+$('.score-message').text(message);
+
+let breakdown = "<h3>Detailed Results:</h3>";
+
+quizData.forEach((question,index) =>{
+ const userAnswer = userAnswers[index];
+
+ 
+// const isCorrect = userAnswer === question.correct
+let isCorrect = false;
+let eachResult = "incorrect";
+if(userAnswer === question.correct){
+  isCorrect = true;
+  eachResult = "correct";
+}
+
+breakdown += `<div class ="result-item"><span>Question ${index +1}</span>
+<span> ${eachResult}</span></div>`;
+
+ 
 });
 
-
-
-
+$('.results-breakdown').html(breakdown);
+$('.quiz-content').hide();
+$('.quiz-control').hide();
+   
+$('.results-container').addClass("show");
+  }
+});
 
 
 
