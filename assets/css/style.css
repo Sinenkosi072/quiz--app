@@ -1,3 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family:"Roboto", sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ca3);
+    min-height: 100vh;
+    justify-content: center;
+    display: flex;
+}
+
+.quiz-container{
+    background: rgb(255, 255, 255);
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+
+}
+
+.quiz-container .quiz-header{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.quiz-container .quiz-header h1{ 
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+ .quiz-header p{
+color: #666;
+}
+
 .answer-pointer .answer-option{
     cursor: pointer;
 }
@@ -11,12 +48,19 @@
 }
 
 .progress-bar{
-    background-color: grey ;
-    height: 4px;
+    background: #e0e0e0 ;
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 30px; 
+    overflow: hidden;
 }
 
 .progress-fill{
-    background-color: blue;
-    width: 20;
-    height: 4px;
+background: linear-gradient(90deg, #667eea, #764ca3);
+width: 90%;
+height: 100%;
+border-radius: 4px;
+
+   
 }
+
