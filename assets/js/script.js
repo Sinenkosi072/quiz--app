@@ -47,7 +47,11 @@ $('#nextBtn').click(function() {
 }); 
 
   function loadQuestion() {
+    $('#nextBtn').prop("disabled" , true);
+    $('#feedback').hide();
+
     let question = quizData[currentQuestion];
+
 
     //progress bar
     const progress = (currentQuestion/quizData.length) *100
@@ -75,23 +79,37 @@ if($('.answer-option').hasClass('disabled')){
 }
     //disable the options
     $('.answer-option').addClass('disabled');
-
+    $('#feedback').show();
+  userAnswers[currentQuestion] = index;
     const question = quizData[currentQuestion];
     const isCorrect = index === question.correct;
 
-    userAnswers[currentQuestion] = index;
+//add correct or uncorrect class
+$('.answer-option').each(function(option){
+  if(option === question.correct ){
+$(this).addClass("correct");
+  }else if(option === index && !isCorrect){
+$(this).addClass("incorrect");
+  }
+});
+
+  
 
     if (isCorrect) {
       score++;
     }
 
     let feedbackText = '';
+    let feedbackClass = "incorrect";
     if(isCorrect){
-      feedbackText = 'Correct! ' + question.explanation;
+      feedbackText = '✅ Correct! ' + question.explanation;
+      feedbackClass = "correct";
     }else{
-      feedbackText = 'Incorrect! ' + question.explanation;
+      feedbackText = '❌ Incorrect! ' + question.explanation;
     }
-     $(".feedback").text(feedbackText);
+     $(".feedback").addClass(feedbackClass).text(feedbackText);
+       $('#nextBtn').prop("disabled" , false)
+
   }
 
   function nextQuestion(){
@@ -149,6 +167,7 @@ $('.quiz-control').hide();
 $('.results-container').addClass("show");
   }
 });
+
 
 
 
