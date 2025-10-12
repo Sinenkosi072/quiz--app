@@ -48,7 +48,7 @@ $('#nextBtn').click(function() {
 
   function loadQuestion() {
     $('#nextBtn').prop("disabled" , true);
-    $('#feedback').hide();
+    $('.feedback').hide();
 
     let question = quizData[currentQuestion];
 
@@ -79,7 +79,7 @@ if($('.answer-option').hasClass('disabled')){
 }
     //disable the options
     $('.answer-option').addClass('disabled');
-    $('#feedback').show();
+    $('.feedback').show();
   userAnswers[currentQuestion] = index;
     const question = quizData[currentQuestion];
     const isCorrect = index === question.correct;
@@ -148,13 +148,15 @@ quizData.forEach((question,index) =>{
  
 // const isCorrect = userAnswer === question.correct
 let isCorrect = false;
-let eachResult = "incorrect";
+let eachResult = "Incorrect";
+let icon = "❌";
 if(userAnswer === question.correct){
   isCorrect = true;
-  eachResult = "correct";
+  eachResult = "Correct";
+  icon = "✅";
 }
 
-breakdown += `<div class ="result-item"><span>Question ${index +1}</span>
+breakdown += `<div class ="result-item"><span>${icon} Question ${index +1}</span>
 <span> ${eachResult}</span></div>`;
 
  
